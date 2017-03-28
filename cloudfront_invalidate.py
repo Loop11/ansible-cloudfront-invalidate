@@ -96,7 +96,9 @@ def main():
     argument_spec = aws_common_argument_spec()
 
     argument_spec.update(dict(
-            profile_name = dict(required=True),
+            # profile_name = dict(required=True),
+            aws_access_key_id = dict(required=True),
+            aws_secret_access_key = dict(required=True),
             distribution_id = dict(required=True),
             path = dict(required=True),
         )
@@ -108,9 +110,12 @@ def main():
 
     distribution_id = module.params.get('distribution_id')
     path = module.params.get('path')
-    profile_name = module.params.get('profile_name')
+    # profile_name = module.params.get('profile_name')
+    aws_access_key_id = module.params.get('aws_access_key_id')
+    aws_secret_access_key = module.params.get('aws_secret_access_key')
 
-    session = Session(profile_name=profile_name).get_credentials()
+    session = Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key).get_credentials()
+    # print('profiles', session.available_profiles())
 
     # connect to Cloudfront
     try:
